@@ -1,0 +1,57 @@
+[% autotag %]
+
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Test::More qw(no_plan);
+use Test::NoWarnings;          # aggressive check for unexpected warnings
+use Test::Exception;           # methods to check exception handling
+use Scalar::Util qw(blessed);  # for when isa_ok() isn't enough
+
+BEGIN { use_ok('[% class.full_name %]'); }
+
+my $obj;
+
+ok($obj = [% class.full_name %]->new(), "Can create a [% class.full_name %]");
+
+isa_ok($obj,'[% class.full_name %]');
+
+[% FOREACH member IN class.members %]
+can_ok($obj,'[% member.name %]');
+[% END %]
+
+[% IF class.members %]
+# TODO tests for return types of methods
+TODO:
+{
+	local $TODO = "[% class.full_name %] not fully implemented";
+	my $ret;
+   [% FOREACH member IN class.members %]
+		[% IF member.member_type == 'Attribute' %]
+			[% my_type = member.type %]
+		[% ELSE %]
+			[% my_type = member.return_type.type %]
+		[% END %]
+		[% IF my_type %]
+			[% IF my_type != '$' AND my_type != '%' AND my_type != '@' AND my_type != 'bool' %]
+				
+				$ret = $obj->[% member.name %]();
+				isa_ok($ret,'[% my_type %]','[% member.name %] returns a "[% my_type %]"');
+		      [% IF member.member_type == 'Attribute' %]
+					isa_ok($obj->[% member.name %]([% my_type %]->new()),'[% my_type %]');
+					
+				[% END %]
+			[% END %]
+		[% END %]
+	[% END %]
+}
+[% END %]
+
+[% FOREACH base IN class.relations %]
+isa_ok($obj,'[% base.parent.full_name %]');
+[% FOREACH member IN base.parent.members %]
+can_ok($obj,'[% member.name %]');
+[% END %]
+[% END %]

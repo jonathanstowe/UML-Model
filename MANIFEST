@@ -1,0 +1,19 @@
+lib/UML/Attribute.pm
+lib/UML/Class.pm
+lib/UML/DataType.pm
+lib/UML/Generalization.pm
+lib/UML/Item.pm
+lib/UML/Member.pm
+lib/UML/Model.pm
+lib/UML/Operation.pm
+lib/UML/Package.pm
+lib/UML/Parameter.pm
+lib/UML/ReturnType.pm
+lib/UML/TypeCache.pm
+lib/UML/TypedThingy.pm
+Makefile.PL
+makefile.pl.tt
+MANIFEST			This list of files
+module.tt
+test.tt
+uml_generate

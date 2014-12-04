@@ -1,0 +1,9 @@
+use ExtUtils::MakeMaker;
+
+WriteMakefile(
+					NAME => 'MAP',
+					VERSION => '0.01',
+					INST_LIB => '[% libdir %]',
+					PMLIBDIR => [],
+					test		=> { TESTS => '[% testdir %]/*.t'}
+				);

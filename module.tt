@@ -1,0 +1,106 @@
+[% autotag %]
+
+package [% class.full_name %];
+
+use strict;
+use warnings;
+
+our $VERSION = '0.01';
+
+# bring in the commonly used modules
+
+require MAP::Common;
+
+use MAP::Exception;
+
+[% FOREACH comp IN class.composed_types %]
+use [% comp.full_name %];
+[% END %]
+
+[% FOREACH base IN class.relations %]
+use base qw([% base.parent.full_name %]);
+[% END %]
+
+=head1 NAME
+
+[% class.full_name %]
+
+
+=head1 DESCRIPTION
+
+[% class.comment %]
+
+
+=head2 METHODS
+
+=over 4
+
+=item new
+
+Constructor for [% class.full_name %]
+
+
+=cut
+
+sub new
+{
+	my ( $class ) = @_;
+
+	my $self = bless {}, $class;
+
+	return $self;
+}
+
+[% FOREACH member IN class.members %]
+
+=item [% member.name %]
+
+
+[% member.comment %]
+
+[% IF member.member_type == 'Attribute' %]
+Parameter: [% member.name.lc %] : [% member.type %]
+
+Returns:   [% member.type %]
+[% ELSE %]
+Parameters: 
+[% FOREACH param IN member.parameters %]
+           [% param.name %] : [% param.type %]
+[% END %]
+
+Returns: [% member.return_type.type %]
+[% END %]
+
+
+=cut
+
+sub [% member.name %]
+
+{
+[% IF member.member_type == 'Attribute' %]
+	my ( $self, $[% member.name.lc %] ) = @_;
+
+	if (defined $[% member.name.lc %] )
+	{
+		$self->{'[% member.name.lc %]'} = $[% member.name.lc %];
+	}
+	[% IF member.type AND member.type != '$' AND member.type != '%' AND member.type != '@' AND member.type != 'bool' %]
+		
+		if (! exists $self->{'[% member.name.lc %]'} )
+		{
+			$self->{'[% member.name.lc %]'} = [% member.type %]->new();
+		}
+
+	[% END %]
+	return $self->{'[% member.name.lc %]'};
+[% ELSE %]
+	my ( $self[% FOREACH param IN member.parameters %], $[% param.name %][% END %]) = @_;
+[% END %]
+}
+
+[% END %]
+
+
+=back
+
+1;

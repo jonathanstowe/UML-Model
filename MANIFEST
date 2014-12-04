@@ -1,3 +1,5 @@
+bin/uml_generate
+Build.PL
 lib/UML/Attribute.pm
 lib/UML/Class.pm
 lib/UML/DataType.pm
@@ -11,9 +13,11 @@ lib/UML/Parameter.pm
 lib/UML/ReturnType.pm
 lib/UML/TypeCache.pm
 lib/UML/TypedThingy.pm
-Makefile.PL
-makefile.pl.tt
-MANIFEST			This list of files
-module.tt
-test.tt
-uml_generate
+LICENSE
+MANIFEST
+README.md
+share/template/makefile.pl.tt
+share/template/module.tt
+share/template/test.tt
+t/01-compile.t
+t/data/FrameworkUML_2.xmi

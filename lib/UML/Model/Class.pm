@@ -1,16 +1,16 @@
-package UML::Class;
+package UML::Model::Class;
 
 use strict;
 use warnings;
 
-use UML::Item;
-use UML::TypeCache;
-use UML::Attribute;
-use UML::Operation;
-use UML::Generalization;
+use UML::Model::Item;
+use UML::Model::TypeCache;
+use UML::Model::Attribute;
+use UML::Model::Operation;
+use UML::Model::Generalization;
 
 use vars qw(@ISA);
-@ISA = qw(UML::Item);
+@ISA = qw(UML::Model::Item);
 
 our $DEBUG = 0;
 
@@ -21,7 +21,7 @@ sub new
    my $xpc = XML::LibXML::XPathContext->new($node);
    my $self = bless { xpc => $xpc, package => $pack_name }, $class;
 
-   my $tc = UML::TypeCache->instance();
+   my $tc = UML::Model::TypeCache->instance();
 
    $tc->add($self);
 
@@ -42,11 +42,11 @@ sub members
 
          if ( $type eq 'Attribute' )
          {
-            push @{ $self->{members} }, UML::Attribute->new($member);
+            push @{ $self->{members} }, UML::Model::Attribute->new($member);
          }
          elsif ( $type eq 'Operation' )
          {
-            push @{ $self->{members} }, UML::Operation->new($member);
+            push @{ $self->{members} }, UML::Model::Operation->new($member);
          }
          else
          {
@@ -76,7 +76,7 @@ sub relations
       {
 			# print "ME: ", $self->full_name(),"\n";
 
-         my $gen = UML::Generalization->new($rel);
+         my $gen = UML::Model::Generalization->new($rel);
 			# stop duplicates
          # stop it croaking when we have a weird type
 			if ( defined $gen->parent() )
@@ -111,14 +111,14 @@ sub composed_types
 		foreach my $member ( $self->members() )
 		{
 			print STDERR "member : ", $member->name(),"\n" if $DEBUG;
-			my $tc = UML::TypeCache->instance();
+			my $tc = UML::Model::TypeCache->instance();
 			my $typeid;
 
-			if ( $member->isa('UML::Attribute') )
+			if ( $member->isa('UML::Model::Attribute') )
 			{
 				$typeid = $member->typeID();
 			}
-			elsif ( $member->isa('UML::Operation'))
+			elsif ( $member->isa('UML::Model::Operation'))
 			{
 				if ( my $rt = $member->return_type() )
 				{
@@ -134,7 +134,7 @@ sub composed_types
 			{
 				my $type = $tc->lookup_object($typeid);
 
-				if ( $type && $type->isa('UML::Class'))
+				if ( $type && $type->isa('UML::Model::Class'))
 				{
 					push @{$self->{composed_types}}, $type;
 				}
@@ -170,7 +170,7 @@ sub inner_classes
 
       foreach my $class ($self->xpc()->findnodes('uml:Namespace.ownedElement/uml:Class') )
       {
-			my $inner_class = UML::Class->new( $class, $self->full_name() );
+			my $inner_class = UML::Model::Class->new( $class, $self->full_name() );
          push @{ $self->{inner_classes} }, $inner_class, $inner_class->inner_classes();
       }
    }

@@ -1,13 +1,13 @@
-package UML::Generalization;
+package UML::Model::Generalization;
 
 use strict;
 use warnings;
 
-use UML::Item;
-use UML::TypeCache;
+use UML::Model::Item;
+use UML::Model::TypeCache;
 
 use vars qw(@ISA);
-@ISA = qw(UML::Item);
+@ISA = qw(UML::Model::Item);
 
 sub new
 {
@@ -63,7 +63,7 @@ sub parent
    if ( not exists $self->{_parent} )
    {
       $self->{_parent} =
-        UML::TypeCache->instance()->lookup_object( $self->parent_id() );
+        UML::Model::TypeCache->instance()->lookup_object( $self->parent_id() );
 
    }
 	if ( $self->{_parent} )

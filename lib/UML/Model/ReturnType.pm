@@ -1,12 +1,12 @@
-package UML::ReturnType;
+package UML::Model::ReturnType;
 
 use strict;
 use warnings;
 
-use UML::TypedThingy;
+use UML::Model::TypedThingy;
 
 use vars qw(@ISA);
-@ISA = qw(UML::TypedThingy);
+@ISA = qw(UML::Model::TypedThingy);
 
 sub name
 {

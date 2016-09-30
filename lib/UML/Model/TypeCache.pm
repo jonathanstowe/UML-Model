@@ -1,4 +1,4 @@
-package UML::TypeCache;
+package UML::Model::TypeCache;
 
 use strict;
 use warnings;

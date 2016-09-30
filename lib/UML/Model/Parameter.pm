@@ -1,11 +1,11 @@
-package UML::Parameter;
+package UML::Model::Parameter;
 
 use strict;
 use warnings;
 
-use UML::TypedThingy;
+use UML::Model::TypedThingy;
 
 use vars qw(@ISA);
-@ISA = qw(UML::TypedThingy);
+@ISA = qw(UML::Model::TypedThingy);
 
 1;

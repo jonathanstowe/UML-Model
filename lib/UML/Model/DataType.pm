@@ -1,11 +1,11 @@
-package UML::DataType;
+package UML::Model::DataType;
 
 use strict;
 use warnings;
 
-use UML::Item;
+use UML::Model::Item;
 
 use vars qw(@ISA);
-@ISA = qw(UML::Item);
+@ISA = qw(UML::Model::Item);
 
 1;

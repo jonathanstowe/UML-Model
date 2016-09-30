@@ -1,14 +1,14 @@
-package UML::Operation;
+package UML::Model::Operation;
 
 use strict;
 use warnings;
 
-use UML::Member;
-use UML::Parameter;
-use UML::ReturnType;
+use UML::Model::Member;
+use UML::Model::Parameter;
+use UML::Model::ReturnType;
 
 use vars qw(@ISA);
-@ISA = qw(UML::Member);
+@ISA = qw(UML::Model::Member);
 
 sub return_type
 {
@@ -23,7 +23,7 @@ sub return_type
 
 		if (defined $rt)
 		{
-      	$self->{_return} = UML::ReturnType->new($rt);
+      	$self->{_return} = UML::Model::ReturnType->new($rt);
 		}
    }
 
@@ -44,7 +44,7 @@ sub parameters
          )
         )
       {
-         push @{ $self->{parameters} }, UML::Parameter->new($param);
+         push @{ $self->{parameters} }, UML::Model::Parameter->new($param);
       }
    }
 

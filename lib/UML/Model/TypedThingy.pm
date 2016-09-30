@@ -1,19 +1,19 @@
-package UML::TypedThingy;
+package UML::Model::TypedThingy;
 
 use strict;
 use warnings;
 
-use UML::Item;
-use UML::TypeCache;
+use UML::Model::Item;
+use UML::Model::TypeCache;
 
 use vars qw(@ISA);
-@ISA = qw(UML::Item);
+@ISA = qw(UML::Model::Item);
 
 sub type
 {
    my ($self) = @_;
 
-   my $tc = UML::TypeCache->instance();
+   my $tc = UML::Model::TypeCache->instance();
 
    if ( not defined $self->{type} )
    {

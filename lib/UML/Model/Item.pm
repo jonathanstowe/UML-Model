@@ -1,4 +1,4 @@
-package UML::Item;
+package UML::Model::Item;
 
 use strict;
 use warnings;
@@ -6,7 +6,7 @@ use warnings;
 use Carp;
 use XML::LibXML;
 use XML::LibXML::XPathContext;
-use UML::TypeCache;
+use UML::Model::TypeCache;
 
 sub new
 {
@@ -15,7 +15,7 @@ sub new
    my $xpc = XML::LibXML::XPathContext->new($node);
    my $self = bless { xpc => $xpc }, $class;
 
-   UML::TypeCache->instance()->add($self);
+   UML::Model::TypeCache->instance()->add($self);
 
    return $self;
 }

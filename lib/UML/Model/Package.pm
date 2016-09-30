@@ -1,13 +1,13 @@
-package UML::Package;
+package UML::Model::Package;
 
 use strict;
 use warnings;
 
-use UML::Item;
-use UML::Class;
+use UML::Model::Item;
+use UML::Model::Class;
 
 use vars qw(@ISA);
-@ISA = qw(UML::Item);
+@ISA = qw(UML::Model::Item);
 
 sub new
 {
@@ -34,7 +34,7 @@ sub inner_packages
 
 		foreach my $package ( $self->xpc()->findnodes('uml:Namespace.ownedElement/uml:Package'))
 		{
-			push @{$self->{inner_packages} }, UML::Package->new($package, $self->full_name() );
+			push @{$self->{inner_packages} }, UML::Model::Package->new($package, $self->full_name() );
 		}
 	}
    return wantarray ? @{ $self->{inner_packages} } : $self->{inner_packages};
@@ -69,7 +69,7 @@ sub classes
 
       foreach my $class ( $self->xpc->findnodes('uml:Namespace.ownedElement/uml:Class') )
       {
-         push @{ $self->{classes} }, UML::Class->new( $class, $self->full_name() );
+         push @{ $self->{classes} }, UML::Model::Class->new( $class, $self->full_name() );
       }
    }
 

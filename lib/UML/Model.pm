@@ -21,26 +21,6 @@ has ns   => (
                default => "http://schema.omg.org/spec/UML/1.3",
             );
 
-sub new
-{
-	my ( $class, $filename ) = @_;
-
-	my $parser = XML::LibXML->new();
-
-	my $doc = $parser->parse_file($filename);
-
-
-	my $self = bless {
-							xpc => $xpc,
-							doc => $doc,
-							parser => $parser,
-							filename => $filename
-						  }, $class;
-
-	$self->datatypes(); # cache the datatypes up front
-	return $self;
-}
-
 has filename   => (
                      is => 'rw',
                      isa   => 'Str',
